@@ -1,25 +1,22 @@
 from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel
 from typing import Annotated
-import model
-from database import engine, SessionLocal
+from src.v1.models import usuario
+from src.v1.setting.database import engine,  get_db
 from sqlalchemy.orm import Session
+
+from src.v1.setting import database
 
 
 app = FastAPI()
 
-model.Base.metadata.create_all(bind=engine)
+database.Base.metadata.create_all(bind=engine)
 
 class UsuarioBase(BaseModel):
         user_name:str
 
     
-def get_db():
-    db = SessionLocal()        
-    try:
-        yield db
-    finally:
-        db.close()
+
         
 db_dependency = Annotated[Session, Depends(get_db)]
         
@@ -30,6 +27,6 @@ async def root():
 
 @app.post("/user/", status_code=status.HTTP_201_CREATED)
 async def create_user(user:UsuarioBase, db:db_dependency):
-    db_user = model.model.Usario(**user.dict())
+    db_user = usuario.Usario(**user.model_dump())#model_dump-dict
     db.add(user)
     db.commit()

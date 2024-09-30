@@ -5,7 +5,7 @@
 		//Si falla la ejecucion dela mbiente  (Set-ExecutionPolicy Unrestricted -Scope Process)
     3) pip install "fastapi[standard]"
 
-    4)pip freeze > requirements.txt
+    4)pip freeze > requeriments.txt
 	    pip install -r requeriments.txt
 
 # Run 

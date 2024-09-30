@@ -1,6 +1,7 @@
 from sqlalchemy import Boolean, Column, Integer, String
-from database  import Base 
+from src.v1.setting.database  import Base 
 
+# (Base) Declara Usuario como una entidad de la BD 
 class Usario(Base):
     __tablename__ = 'Usuarios'
     
@@ -9,9 +10,7 @@ class Usario(Base):
 
 
     
-# class Jugadas(Base):
-#     __tablename__ = "jugadas"
-    
-#     id = Column(Integer, primary_key=True, index=True)
-#     key = Column(String(50))
+
+
+
     
