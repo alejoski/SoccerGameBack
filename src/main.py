@@ -1,32 +1,23 @@
-from fastapi import FastAPI, HTTPException, Depends, status
-from pydantic import BaseModel
-from typing import Annotated
-from src.v1.models import usuario
-from src.v1.setting.database import engine,  get_db
-from sqlalchemy.orm import Session
-
+from fastapi import FastAPI
+from src.v1.setting.database import engine
 from src.v1.setting import database
-
+from src.v1.routers import usario_router
+from src.v1.routers import Jugadas_router
 
 app = FastAPI()
+app.title = "Soccer Game - API"
+app.version = "0.0.1"
+
+
+#Routers
+app.include_router(usario_router.router)
+app.include_router(Jugadas_router.router)
 
 database.Base.metadata.create_all(bind=engine)
 
-class UsuarioBase(BaseModel):
-        user_name:str
 
-    
-
-        
-db_dependency = Annotated[Session, Depends(get_db)]
-        
+     
 
 @app.get("/")
 async def root():
-    return {"message":"Hello World"}
-
-@app.post("/user/", status_code=status.HTTP_201_CREATED)
-async def create_user(user:UsuarioBase, db:db_dependency):
-    db_user = usuario.Usario(**user.model_dump())#model_dump-dict
-    db.add(user)
-    db.commit()
+    return {"message":"Activo!"}
