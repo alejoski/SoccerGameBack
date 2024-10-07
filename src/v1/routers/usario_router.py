@@ -24,15 +24,17 @@ db_dependency = Annotated[Session, Depends(get_db)]
 def login(usuario:UsuarioLoginDTO):
     if usuario.correo == "aa" and  usuario.password == "bb":
         token : str = create_token(usuario.dict())
-        return JSONResponse(status_code=200, content=token)
+        
+
+        return JSONResponse(status_code=200, content=jsonable_encoder({"token":token}))
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED)
+@router.post("/newUser", status_code=status.HTTP_201_CREATED)
 async def create_user(user: UsuarioDTO, db: db_dependency):
     UsusarioServices(db).create_usuario(user)
 
 
-@router.get("/", dependencies=[Depends(JWTBearer())])
+@router.get("/getUser", dependencies=[Depends(JWTBearer())])
 def get_users(db: db_dependency) -> List[UsuarioDTO]:
     result = UsusarioServices(db).get_usuarios()
     return JSONResponse(status_code=200, content=jsonable_encoder(result))
