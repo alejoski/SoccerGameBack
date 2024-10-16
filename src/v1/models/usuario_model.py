@@ -8,7 +8,8 @@ class Usuario(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_name = Column(String(50), unique=True)
     password  = Column(String(50))
-    correo  = Column(String(50))
+    email  = Column(String(50))
+    team_name = Column(String(50))    
 
 
 

@@ -22,7 +22,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 
 @router.post('/login', tags=['auth'])
 def login(usuario:UsuarioLoginDTO):
-    if usuario.correo == "aa" and  usuario.password == "bb":
+    if usuario.email == "aa" and  usuario.password == "bb":
         token : str = create_token(usuario.dict())
         
 

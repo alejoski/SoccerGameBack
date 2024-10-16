@@ -8,6 +8,7 @@ class UsusarioServices():
         self.db = db
 
     def create_usuario(self, usuario: UsuarioDTO):
+        print(usuario)
         new_user = UsuarioModel(**usuario.model_dump())
         self.db.add(new_user)
         self.db.commit()

@@ -13,7 +13,7 @@ def create_token(data: dict)->str:
 
     fecha_exp_UNIX= time.mktime( tiempo_exp.timetuple())
 
-    token : str = encode({"correo":data['correo'], "exp":(fecha_exp_UNIX)}, key="my_secret_key_SG", algorithm="HS256")
+    token : str = encode({"email":data['email'], "exp":(fecha_exp_UNIX)}, key="my_secret_key_SG", algorithm="HS256")
     return token
 
 
