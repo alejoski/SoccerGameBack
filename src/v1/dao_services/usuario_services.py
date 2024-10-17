@@ -1,3 +1,4 @@
+from traceback import print_tb
 from unittest import result
 from src.v1.models.usuario_model import Usuario as UsuarioModel
 from src.v1.dto_schemas.usuario_dto import UsuarioDTO
@@ -16,5 +17,10 @@ class UsusarioServices():
     
     def get_usuarios(self):
         result = self.db.query(UsuarioModel).all()
+        return result
+    
+    def get_usuario_by_email(self, email):
+        print("Llego al servicio get_usuario_by_email()", email)
+        result = self.db.query(UsuarioModel).filter(UsuarioModel.email == email).first()
         return result
         
