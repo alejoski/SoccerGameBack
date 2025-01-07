@@ -1,7 +1,10 @@
 from math import exp
 import time, datetime as datetime_d
-from jwt import encode, decode
+from traceback import print_tb
+from fastapi import Request, HTTPException, status
+from jwt import encode, decode, InvalidTokenError
 from datetime import datetime, timezone
+
 
 def create_token(data: dict)->str:
     
@@ -17,7 +20,42 @@ def create_token(data: dict)->str:
     return token
 
 
-def validate_token(token: str)-> dict:
-    data : dict = decode(token, key="my_secret_key_SG", algorithms=["HS256"])
-    return data
 
+# class JWTBearer(HTTPBearer):
+#     def __init__(self, auto_error: bool = True):
+#         super(JWTBearer, self).__init__(auto_error=auto_error)
+    
+#     async def __call__(self, request):
+#         credentials: HTTPAuthorizationCredentials = await super(JWTBearer, self).__call__(request)
+#         if credentials:
+#             if not credentials.scheme == "Bearer":
+#                 raise HTTPException(status_code=403, detail="Invalid authentication scheme.")
+#             token = credentials.credentials
+#             if not True: #self.validate_token(token):
+#                 raise HTTPException(status_code=403, detail="Invalid token or expired token.")
+#             return token
+#         else:
+#             raise HTTPException(status_code=403, detail="Invalid authorization code.")
+
+
+ 
+
+def validate_token(token: str)-> dict:
+
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    try:
+        print("Validatoken")
+        print(token)
+
+        data : dict =  decode(token, key="my_secret_key_SG", algorithms=["HS256"])
+        print("Decodifica token")
+
+    except InvalidTokenError:
+        raise credentials_exception
+
+    return data

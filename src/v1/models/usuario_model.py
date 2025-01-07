@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String
+from datetime import datetime
+from sqlalchemy import Column, Integer, String, DateTime
 from src.v1.setting.database  import Base 
 
 # (Base) Declara Usuario como una entidad de la BD 
@@ -10,6 +11,8 @@ class Usuario(Base):
     password  = Column(String(50))
     email  = Column(String(50))
     team_name = Column(String(50))    
+    create_date = Column(DateTime, default=datetime.now(), nullable=True)   #, default=datetime.now(), nullable=True
+
 
 
 

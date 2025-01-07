@@ -23,7 +23,11 @@ app.add_middleware(
 app.include_router(usario_router.router)
 app.include_router(Jugadas_router.router)
 
+
+
+#database.Base.metadata.drop_all(bind=engine)
 database.Base.metadata.create_all(bind=engine)
+
 
 
      

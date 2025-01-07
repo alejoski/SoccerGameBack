@@ -12,7 +12,10 @@ class UsusarioServices():
         print(usuario)
         new_user = UsuarioModel(**usuario.model_dump())
         self.db.add(new_user)
-        self.db.commit()
+        algo = self.db.commit()
+
+        print("***************ALGO************")
+        print(algo)
         return
     
     def get_usuarios(self):
